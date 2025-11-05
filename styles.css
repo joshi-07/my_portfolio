@@ -848,6 +848,13 @@ body.light-mode .navbar {
     overflow: hidden;
 }
 
+.project-screenshot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .project-overlay {
     position: absolute;
     inset: 0;
@@ -1129,6 +1136,86 @@ body.light-mode .navbar {
 }
 
 /* ===================================
+   BACKGROUND ANIMATION
+   =================================== */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: runParticle 15s linear infinite;
+}
+
+.particle:nth-child(odd) {
+    background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
+    animation-duration: 18s;
+}
+
+.particle:nth-child(3n) {
+    width: 6px;
+    height: 6px;
+    animation-duration: 12s;
+}
+
+.particle:nth-child(5n) {
+    width: 3px;
+    height: 3px;
+    animation-duration: 20s;
+}
+
+@keyframes runParticle {
+    0% {
+        transform: translateX(-100px) translateY(100vh);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.6;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateX(calc(100vw + 100px)) translateY(-100px);
+        opacity: 0;
+    }
+}
+
+/* Individual particle delays */
+.particle-1 { animation-delay: 0s; }
+.particle-2 { animation-delay: 1s; }
+.particle-3 { animation-delay: 2s; }
+.particle-4 { animation-delay: 3s; }
+.particle-5 { animation-delay: 4s; }
+.particle-6 { animation-delay: 5s; }
+.particle-7 { animation-delay: 6s; }
+.particle-8 { animation-delay: 7s; }
+.particle-9 { animation-delay: 8s; }
+.particle-10 { animation-delay: 9s; }
+.particle-11 { animation-delay: 10s; }
+.particle-12 { animation-delay: 11s; }
+.particle-13 { animation-delay: 12s; }
+.particle-14 { animation-delay: 13s; }
+.particle-15 { animation-delay: 14s; }
+.particle-16 { animation-delay: 15s; }
+.particle-17 { animation-delay: 16s; }
+.particle-18 { animation-delay: 17s; }
+.particle-19 { animation-delay: 18s; }
+.particle-20 { animation-delay: 19s; }
+
+/* ===================================
    ANIMATIONS
    =================================== */
 @keyframes fadeInUp {
@@ -1151,6 +1238,19 @@ body.light-mode .navbar {
         opacity: 1;
         transform: translateX(0);
     }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.section.animate {
+    animation: fadeIn 1s ease-out;
 }
 
 /* ===================================
