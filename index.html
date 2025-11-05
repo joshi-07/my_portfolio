@@ -19,149 +19,487 @@
     </script>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-icon">S</span>
+                <span class="logo-text">Sughosha Joshi</span>
+            </div>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="theme-toggle" class="theme-btn" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-    <div class="container">
-        <button id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
-        <button id="lang-toggle" aria-label="Toggle language">EN</button>
-        <header>
-            <div class="profile-pic">
-                <img src="https://via.placeholder.com/150" alt="Sughosha K Joshi" loading="lazy">
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="hero-background">
+            <div class="hero-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
             </div>
-            <h1 id="name">Sughosha K Joshi</h1>
-            <p id="subtitle">Portfolio</p>
-        </header>
-        <section class="about">
-            <h2>About Me</h2>
-            <p>I'm Sughosha K Joshi, a passionate engineering student specializing in software development. With a strong foundation in Python, C++, and web technologies, I enjoy solving complex problems through innovative code. My journey includes building scalable applications, contributing to open-source projects, and continuously learning emerging technologies like AI and cloud computing.</p>
-            <p>Currently pursuing my degree, I've gained hands-on experience through internships and personal projects, focusing on creating efficient, user-friendly solutions that make a real impact.</p>
-        </section>
-        <section class="experience">
-            <h2>Experience</h2>
-            <div class="exp-item">
-                <h3>Software Engineering Intern</h3>
-                <p class="exp-date">June 2023 - August 2023</p>
-                <p>Developed full-stack web applications using React and Node.js, improving user engagement by 25%. Collaborated with cross-functional teams to implement agile methodologies and deliver projects on time.</p>
-            </div>
-            <div class="exp-item">
-                <h3>Open-Source Contributor</h3>
-                <p class="exp-date">Ongoing</p>
-                <p>Contributed to various open-source projects on GitHub, focusing on bug fixes and feature enhancements. Gained experience in code reviews, version control, and collaborative development.</p>
-            </div>
-            <div class="exp-item">
-                <h3>Engineering Student</h3>
-                <p class="exp-date">2021 - Present</p>
-                <p>Pursuing Bachelor's in Computer Science with a focus on software development, algorithms, and data structures. Maintained a 3.8 GPA while participating in coding competitions and hackathons.</p>
-            </div>
-        </section>
-        <section class="skills">
-            <h2>Skills</h2>
-            <div class="skill-bars">
-                <div class="skill">
-                    <span>Python</span>
-                    <div class="progress-bar"><div class="progress" style="width: 80%"></div></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <span class="hero-greeting">Hello, I'm</span>
+                <h1 class="hero-title">Sughosha K Joshi</h1>
+                <p class="hero-subtitle">Software Engineering Student & Developer</p>
+                <p class="hero-description">Passionate about building innovative solutions through code. Specializing in full-stack development, algorithms, and creating impactful software.</p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">View Projects</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
                 </div>
-                <div class="skill">
-                    <span>C++</span>
-                    <div class="progress-bar"><div class="progress" style="width: 75%"></div></div>
-                </div>
-                <div class="skill">
-                    <span>C</span>
-                    <div class="progress-bar"><div class="progress" style="width: 70%"></div></div>
-                </div>
-                <div class="skill">
-                    <span>JavaScript</span>
-                    <div class="progress-bar"><div class="progress" style="width: 85%"></div></div>
-                </div>
-                <div class="skill">
-                    <span>CSS</span>
-                    <div class="progress-bar"><div class="progress" style="width: 90%"></div></div>
+                <div class="hero-social">
+                    <a href="https://github.com/joshi-07" target="_blank" class="social-icon" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.instagram.com/sughosha_joshi_07/" target="_blank" class="social-icon" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://discord.com/users/suguff" target="_blank" class="social-icon" aria-label="Discord">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="mailto:sughoshak6@gmail.com" class="social-icon" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
                 </div>
             </div>
-        </section>
-        <section class="projects">
-            <h2>Projects</h2>
-            <div class="project-grid">
-                <div class="project-card">
-                    <h3>Digital Notes Wallet</h3>
-                    <p>A lightweight, user-friendly digital wallet for storing and managing notes efficiently. Built for simplicity and quick access, this project helps users organize, track, and secure their notes in one place. Ideal for students, professionals, or anyone looking to manage information digitally.</p>
-                    <p><strong>Technologies:</strong> HTML, CSS, JavaScript</p>
-                    <p><strong>Impact:</strong> 2 stars, 2 forks on GitHub - demonstrates practical utility and community interest.</p>
-                    <a href="https://github.com/joshi-07/dbit-notes-wallet" target="_blank">View on GitHub</a>
-                </div>
-                <div class="project-card">
-                    <div class="project-logo arcade-logo" onclick="window.open('https://joshi-07.github.io/mini_arcade_game/', '_blank')">
-                        <div class="controller">
-                            <div class="body"></div>
-                            <div class="buttons">
-                                <div class="button a"></div>
-                                <div class="button b"></div>
-                            </div>
-                            <div class="dpad"></div>
+            <div class="hero-image">
+                <div class="profile-card">
+                    <div class="profile-image-wrapper">
+                        <img src="https://via.placeholder.com/300" alt="Sughosha K Joshi" class="profile-image">
+                        <div class="profile-status">
+                            <span class="status-dot"></span>
+                            <span class="status-text">Available for opportunities</span>
                         </div>
                     </div>
-                    <h3>Mini Arcade Game</h3>
-                    <p>An interactive mini arcade game built with JavaScript, featuring engaging gameplay and responsive controls. Showcases game development skills and user interaction design.</p>
-                    <p><strong>Technologies:</strong> JavaScript, HTML, CSS</p>
-                    <p><strong>Impact:</strong> 1 star, 1 fork - highlights creativity and programming fundamentals.</p>
-                    <a href="https://github.com/joshi-07/mini_arcade_game" target="_blank">View on GitHub</a>
-                </div>
-                <div class="project-card">
-                    <h3>Resume Application</h3>
-                    <p>A web-based resume application for creating and managing professional resumes. Features dynamic content loading and clean, professional layouts.</p>
-                    <p><strong>Technologies:</strong> HTML, CSS, JavaScript</p>
-                    <p><strong>Impact:</strong> Demonstrates ability to build practical web applications for career development.</p>
-                    <a href="https://github.com/joshi-07/resume_app" target="_blank">View on GitHub</a>
-                </div>
-                <div class="project-card">
-                    <h3>Portfolio Website</h3>
-                    <p>A responsive portfolio website showcasing skills, projects, and experience. Features glassmorphism design, dark mode toggle, and interactive elements.</p>
-                    <p><strong>Technologies:</strong> HTML, CSS, JavaScript</p>
-                    <p><strong>Impact:</strong> Professional presentation of work and achievements.</p>
-                    <a href="https://github.com/joshi-07/my_portfolio" target="_blank">View on GitHub</a>
                 </div>
             </div>
-        </section>
-        <section class="testimonials">
-            <h2>Testimonials</h2>
-            <div class="testimonial">
-                <p>"Great work on the projects!"</p>
-                <cite>- Colleague</cite>
-            </div>
-        </section>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll Down</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
 
-        <section class="blog">
-            <h2>Latest Articles</h2>
-            <div class="article">
-                <h3>Introduction to Python</h3>
-                <p>A beginner's guide to Python programming.</p>
-                <a href="#" target="_blank">Read More</a>
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get To Know</span>
+                <h2 class="section-title">About Me</h2>
             </div>
-            <div class="article">
-                <h3>Building Scalable Web Apps</h3>
-                <p>Best practices for modern web development.</p>
-                <a href="#" target="_blank">Read More</a>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-lead">I'm Sughosha K Joshi, a passionate engineering student specializing in software development with a strong foundation in multiple programming languages and modern web technologies.</p>
+                    <p>With expertise in Python, C++, and web technologies, I enjoy solving complex problems through innovative code. My journey includes building scalable applications, contributing to open-source projects, and continuously learning emerging technologies like AI and cloud computing.</p>
+                    <p>Currently pursuing my degree, I've gained hands-on experience through internships and personal projects, focusing on creating efficient, user-friendly solutions that make a real impact.</p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">5+</span>
+                            <span class="stat-label">Languages</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">10+</span>
+                            <span class="stat-label">Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">2+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">3.8</span>
+                            <span class="stat-label">GPA</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-        <section class="contact">
-            <h2>Contact Me</h2>
-            <form action="https://formspree.io/f/your-form-id" method="POST">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
-        </section>
-        <section class="social-links">
-            <h2>Connect with Me</h2>
-            <div class="buttons">
-                <button id="gmail"><i class="fas fa-envelope"></i> Gmail</button>
-                <button id="instagram"><i class="fab fa-instagram"></i> Instagram</button>
-                <button id="discord"><i class="fab fa-discord"></i> Discord</button>
-                <button id="linkedin"><i class="fab fa-linkedin"></i> LinkedIn</button>
-                <button id="github"><i class="fab fa-github"></i> GitHub</button>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section experience-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">My Journey</span>
+                <h2 class="section-title">Experience</h2>
             </div>
-        </section>
-    </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">June 2023 - August 2023</span>
+                        <h3 class="timeline-title">Software Engineering Intern</h3>
+                        <p class="timeline-description">Developed full-stack web applications using React and Node.js, improving user engagement by 25%. Collaborated with cross-functional teams to implement agile methodologies and deliver projects on time.</p>
+                        <div class="timeline-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Agile</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">Ongoing</span>
+                        <h3 class="timeline-title">Open-Source Contributor</h3>
+                        <p class="timeline-description">Contributed to various open-source projects on GitHub, focusing on bug fixes and feature enhancements. Gained experience in code reviews, version control, and collaborative development.</p>
+                        <div class="timeline-tags">
+                            <span class="tag">GitHub</span>
+                            <span class="tag">Collaboration</span>
+                            <span class="tag">Code Review</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <span class="timeline-date">2021 - Present</span>
+                        <h3 class="timeline-title">Computer Science Student</h3>
+                        <p class="timeline-description">Pursuing Bachelor's in Computer Science with a focus on software development, algorithms, and data structures. Maintained a 3.8 GPA while participating in coding competitions and hackathons.</p>
+                        <div class="timeline-tags">
+                            <span class="tag">Algorithms</span>
+                            <span class="tag">Data Structures</span>
+                            <span class="tag">Hackathons</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section skills-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">What I Know</span>
+                <h2 class="section-title">Skills & Technologies</h2>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-code"></i>
+                        <h3>Programming Languages</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Python</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">JavaScript</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">C++</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">C</span>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="75"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-palette"></i>
+                        <h3>Web Technologies</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">HTML/CSS</span>
+                                <span class="skill-percent">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">React</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-info">
+                                <span class="skill-name">Node.js</span>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="75"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <div class="category-header">
+                        <i class="fas fa-tools"></i>
+                        <h3>Tools & Others</h3>
+                    </div>
+                    <div class="skill-badges">
+                        <span class="badge">Git</span>
+                        <span class="badge">GitHub</span>
+                        <span class="badge">VS Code</span>
+                        <span class="badge">Agile</span>
+                        <span class="badge">REST APIs</span>
+                        <span class="badge">SQL</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">My Work</span>
+                <h2 class="section-title">Featured Projects</h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://github.com/joshi-07/dbit-notes-wallet" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Digital Notes Wallet</h3>
+                            <div class="project-meta">
+                                <span class="meta-item"><i class="fas fa-star"></i> 2</span>
+                                <span class="meta-item"><i class="fas fa-code-branch"></i> 2</span>
+                            </div>
+                        </div>
+                        <p class="project-description">A lightweight, user-friendly digital wallet for storing and managing notes efficiently. Built for simplicity and quick access, ideal for students and professionals.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <a href="https://github.com/joshi-07/dbit-notes-wallet" target="_blank" class="project-btn">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://joshi-07.github.io/mini_arcade_game/" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Mini Arcade Game</h3>
+                            <div class="project-meta">
+                                <span class="meta-item"><i class="fas fa-star"></i> 1</span>
+                                <span class="meta-item"><i class="fas fa-code-branch"></i> 1</span>
+                            </div>
+                        </div>
+                        <p class="project-description">An interactive mini arcade game featuring engaging gameplay and responsive controls. Showcases game development skills and user interaction design.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">HTML5</span>
+                            <span class="tech-tag">CSS3</span>
+                        </div>
+                        <a href="https://github.com/joshi-07/mini_arcade_game" target="_blank" class="project-btn">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://github.com/joshi-07/resume_app" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Resume Application</h3>
+                            <div class="project-meta">
+                                <span class="meta-item"><i class="fas fa-eye"></i> 100+</span>
+                            </div>
+                        </div>
+                        <p class="project-description">A web-based resume application for creating and managing professional resumes. Features dynamic content loading and clean, professional layouts.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <a href="https://github.com/joshi-07/resume_app" target="_blank" class="project-btn">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="project-overlay">
+                            <a href="https://github.com/joshi-07/my_portfolio" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <h3 class="project-title">Portfolio Website</h3>
+                            <div class="project-meta">
+                                <span class="meta-item"><i class="fas fa-globe"></i> Live</span>
+                            </div>
+                        </div>
+                        <p class="project-description">A responsive portfolio website showcasing skills, projects, and experience. Features modern design, smooth animations, and interactive elements.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
+                        <a href="https://github.com/joshi-07/my_portfolio" target="_blank" class="project-btn">
+                            View Project <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get In Touch</span>
+                <h2 class="section-title">Contact Me</h2>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Let's Work Together</h3>
+                    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>Email</h4>
+                                <a href="mailto:sughoshak6@gmail.com">sughoshak6@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-github"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>GitHub</h4>
+                                <a href="https://github.com/joshi-07" target="_blank">@joshi-07</a>
+                            </div>
+                        </div>
+                        <div class="contact-method">
+                            <div class="method-icon">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <div class="method-details">
+                                <h4>Instagram</h4>
+                                <a href="https://www.instagram.com/sughosha_joshi_07/" target="_blank">@sughosha_joshi_07</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" action="https://formspree.io/f/your-form-id" method="POST">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" name="subject" required placeholder="Project Inquiry">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        Send Message <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2025 Sughosha K Joshi. All rights reserved.</p>
+                    <p>Built with <i class="fas fa-heart"></i> and modern web technologies</p>
+                </div>
+                <div class="footer-social">
+                    <a href="https://github.com/joshi-07" target="_blank" class="footer-social-link" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.instagram.com/sughosha_joshi_07/" target="_blank" class="footer-social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://discord.com/users/suguff" target="_blank" class="footer-social-link" aria-label="Discord">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                    <a href="mailto:sughoshak6@gmail.com" class="footer-social-link" aria-label="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <script src="script.js"></script>
 </body>
 </html>
