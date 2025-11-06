@@ -431,8 +431,116 @@ body.light-mode .navbar {
     box-shadow: 0 10px 20px rgba(100, 255, 218, 0.2);
 }
 
-.hero-image {
+.hero-animations {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+.floating-icon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg-primary);
+    font-size: 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+    transition: var(--transition);
+    animation: floatAround 20s ease-in-out infinite;
+}
+
+.floating-icon:hover {
+    transform: scale(1.2);
+    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.5);
+}
+
+.icon-1 {
+    animation: floatAround1 15s ease-in-out infinite;
+    animation-delay: 0s;
+}
+.icon-2 {
+    animation: floatAround2 15s ease-in-out infinite;
+    animation-delay: 1s;
+}
+.icon-3 {
+    animation: floatAround3 15s ease-in-out infinite;
+    animation-delay: 2s;
+}
+.icon-4 {
+    animation: floatAround4 15s ease-in-out infinite;
+    animation-delay: 3s;
+}
+.icon-5 {
+    animation: floatAround5 15s ease-in-out infinite;
+    animation-delay: 4s;
+}
+.icon-6 {
+    animation: floatAround6 15s ease-in-out infinite;
+    animation-delay: 5s;
+}
+.icon-7 {
+    animation: floatAround7 15s ease-in-out infinite;
+    animation-delay: 6s;
+}
+.icon-8 {
+    animation: floatAround8 15s ease-in-out infinite;
+    animation-delay: 7s;
+}
+
+@keyframes floatAround1 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(100px, 0px) rotate(0deg); }
+    100% { transform: translate(100px, 0px) rotate(360deg); }
+}
+
+@keyframes floatAround2 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(70.71px, 70.71px) rotate(0deg); }
+    100% { transform: translate(70.71px, 70.71px) rotate(360deg); }
+}
+
+@keyframes floatAround3 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(0px, 100px) rotate(0deg); }
+    100% { transform: translate(0px, 100px) rotate(360deg); }
+}
+
+@keyframes floatAround4 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-70.71px, 70.71px) rotate(0deg); }
+    100% { transform: translate(-70.71px, 70.71px) rotate(360deg); }
+}
+
+@keyframes floatAround5 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-100px, 0px) rotate(0deg); }
+    100% { transform: translate(-100px, 0px) rotate(360deg); }
+}
+
+@keyframes floatAround6 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(-70.71px, -70.71px) rotate(0deg); }
+    100% { transform: translate(-70.71px, -70.71px) rotate(360deg); }
+}
+
+@keyframes floatAround7 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(0px, -100px) rotate(0deg); }
+    100% { transform: translate(0px, -100px) rotate(360deg); }
+}
+
+@keyframes floatAround8 {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(70.71px, -70.71px) rotate(0deg); }
+    100% { transform: translate(70.71px, -70.71px) rotate(360deg); }
 }
 
 .profile-card {
@@ -1529,7 +1637,7 @@ body.light-mode .navbar {
 }
 
 .section-title::after {
-    animation: drawUnderline 3s ease-in-out infinite;
+    animation: drawUnderline 3s ease-in-out;
 }
 
 .nav-link::after {
