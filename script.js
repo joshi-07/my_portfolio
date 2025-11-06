@@ -1,9 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
+    let hasScrolled = false;
+
+    // Track if user has scrolled
+    window.addEventListener('scroll', () => {
+        hasScrolled = true;
+    });
+
     const links = {
         gmail: 'mailto:sughoshak6@gmail.com',
         instagram: 'https://www.instagram.com/sughosha_joshi_07/',
         discord: 'https://discord.com/users/suguff',
-        linkedin: '#', // Placeholder
+        linkedin: 'https://www.linkedin.com/in/sughosha-k-joshi-74b96b395',
         github: 'https://github.com/joshi-07'
     };
 
@@ -98,13 +105,93 @@ document.addEventListener('DOMContentLoaded', function() {
     const progressObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.width = entry.target.style.width || '0%';
+                const progress = entry.target;
+                const percent = progress.getAttribute('data-progress') || '0';
+                progress.style.width = percent + '%';
             }
         });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
     });
 
-    document.querySelectorAll('.progress').forEach(progress => {
+    document.querySelectorAll('.skill-progress').forEach(progress => {
         progressObserver.observe(progress);
+    });
+
+    // Animate elements on scroll
+    const animateObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const delay = index * 0.1; // Stagger animations
+                setTimeout(() => {
+                    element.classList.add('animate-fade-in-up');
+                }, delay * 1000);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    // About section animations
+    document.querySelectorAll('.about-lead, .about-text p').forEach(el => {
+        animateObserver.observe(el);
+    });
+
+    document.querySelectorAll('.stat-item').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 0.1}s`;
+        animateObserver.observe(el);
+    });
+
+    // Override animation class for about section to slide from left
+    const aboutObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const delay = index * 0.1;
+                setTimeout(() => {
+                    element.classList.add('animate-fade-in-left');
+                }, delay * 1000);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    document.querySelectorAll('.about-lead, .about-text p, .stat-item').forEach(el => {
+        aboutObserver.observe(el);
+    });
+
+    // Experience section animations
+    document.querySelectorAll('.timeline-item').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 0.2}s`;
+        animateObserver.observe(el);
+    });
+
+    // Skills section animations
+    document.querySelectorAll('.skill-category').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 0.1}s`;
+        animateObserver.observe(el);
+    });
+
+    // Projects section animations
+    document.querySelectorAll('.project-card').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 0.1}s`;
+        animateObserver.observe(el);
+    });
+
+    // Contact section animations
+    document.querySelectorAll('.contact-method').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 0.1}s`;
+        animateObserver.observe(el);
+    });
+
+    document.querySelectorAll('.contact-form .form-group').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 0.1}s`;
+        animateObserver.observe(el);
     });
 
     // Tooltip for social buttons
