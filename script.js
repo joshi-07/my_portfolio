@@ -6,6 +6,20 @@ document.addEventListener('DOMContentLoaded', function() {
         hasScrolled = true;
     });
 
+    // Typewriter effect for hero title
+    const heroTitle = document.querySelector('.hero-title');
+    const originalText = heroTitle.textContent;
+    heroTitle.textContent = '';
+    let i = 0;
+    const typeWriter = () => {
+        if (i < originalText.length) {
+            heroTitle.textContent += originalText.charAt(i);
+            i++;
+            setTimeout(typeWriter, 100);
+        }
+    };
+    setTimeout(typeWriter, 1000); // Start after 1 second
+
     const links = {
         gmail: 'mailto:sughoshak6@gmail.com',
         instagram: 'https://www.instagram.com/sughosha_joshi_07/',
