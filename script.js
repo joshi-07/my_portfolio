@@ -37,6 +37,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Mobile menu toggle
+    const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+
+    mobileMenuToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('open');
+        // Toggle hamburger animation
+        const spans = mobileMenuToggle.querySelectorAll('span');
+        spans.forEach(span => span.classList.toggle('active'));
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function() {
+            navMenu.classList.remove('open');
+            const spans = mobileMenuToggle.querySelectorAll('span');
+            spans.forEach(span => span.classList.remove('active'));
+        });
+    });
+
     // Theme toggle
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', function() {
@@ -99,11 +119,14 @@ document.addEventListener('DOMContentLoaded', function() {
         langToggle.textContent = isEnglish ? 'EN' : 'HI';
     });
 
-    // Scroll animations for sections
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+    // Slide-in-left animation for all sections on scroll
+    const slideObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
+                const delay = index * 0.15; // Stagger animations slightly
+                setTimeout(() => {
+                    entry.target.classList.add('slide-in-left');
+                }, delay * 1000);
             }
         });
     }, {
@@ -111,8 +134,15 @@ document.addEventListener('DOMContentLoaded', function() {
         rootMargin: '0px 0px -50px 0px'
     });
 
+    // Observe all sections for slide-in-left
     document.querySelectorAll('section').forEach(section => {
-        sectionObserver.observe(section);
+        slideObserver.observe(section);
+    });
+
+    // Also observe individual elements within sections for smoother animation
+    const slideElements = document.querySelectorAll('.timeline-item, .skill-category, .project-card, .contact-method, .form-group, .about-lead, .about-text p, .stat-item');
+    slideElements.forEach(element => {
+        slideObserver.observe(element);
     });
 
     // Animate progress bars on scroll

@@ -1247,11 +1247,17 @@ body.light-mode .navbar {
     overflow: hidden;
 }
 
+/* Enhanced Floating Particles/Bubbles (Idea 1) */
 .bubble-full-1,
 .bubble-full-2,
 .bubble-full-3,
 .bubble-full-4,
-.bubble-full-5 {
+.bubble-full-5,
+.bubble-full-6,
+.bubble-full-7,
+.bubble-full-8,
+.bubble-full-9,
+.bubble-full-10 {
     position: absolute;
     width: 8px;
     height: 8px;
@@ -1262,31 +1268,16 @@ body.light-mode .navbar {
     opacity: 0.3;
 }
 
-.bubble-full-1 {
-    top: 10%;
-    left: 10%;
-    animation-delay: 0s;
-}
-.bubble-full-2 {
-    top: 25%;
-    right: 15%;
-    animation-delay: 5s;
-}
-.bubble-full-3 {
-    top: 50%;
-    left: 20%;
-    animation-delay: 10s;
-}
-.bubble-full-4 {
-    top: 75%;
-    right: 10%;
-    animation-delay: 15s;
-}
-.bubble-full-5 {
-    top: 90%;
-    left: 30%;
-    animation-delay: 20s;
-}
+.bubble-full-1 { top: 10%; left: 10%; animation-delay: 0s; }
+.bubble-full-2 { top: 25%; right: 15%; animation-delay: 5s; }
+.bubble-full-3 { top: 50%; left: 20%; animation-delay: 10s; }
+.bubble-full-4 { top: 75%; right: 10%; animation-delay: 15s; }
+.bubble-full-5 { top: 90%; left: 30%; animation-delay: 20s; }
+.bubble-full-6 { top: 15%; right: 25%; animation-delay: 2s; width: 6px; height: 6px; }
+.bubble-full-7 { top: 60%; left: 40%; animation-delay: 7s; width: 10px; height: 10px; }
+.bubble-full-8 { top: 80%; right: 30%; animation-delay: 12s; width: 5px; height: 5px; }
+.bubble-full-9 { top: 35%; left: 60%; animation-delay: 17s; width: 7px; height: 7px; }
+.bubble-full-10 { top: 45%; right: 50%; animation-delay: 22s; width: 9px; height: 9px; }
 
 @keyframes bubbleFloat {
     0% {
@@ -1303,6 +1294,29 @@ body.light-mode .navbar {
         transform: translateY(-100px) translateX(50px);
         opacity: 0;
     }
+}
+
+/* Parallax Background Elements (Idea 5) */
+.parallax-element {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgba(100, 255, 218, 0.05);
+    border-radius: 50%;
+    animation: parallaxFloat 30s ease-in-out infinite;
+    opacity: 0.2;
+}
+
+.parallax-element:nth-child(1) { top: 20%; left: 5%; animation-delay: 0s; }
+.parallax-element:nth-child(2) { top: 40%; right: 10%; animation-delay: 10s; width: 30px; height: 30px; }
+.parallax-element:nth-child(3) { top: 60%; left: 15%; animation-delay: 20s; width: 40px; height: 40px; }
+.parallax-element:nth-child(4) { top: 80%; right: 20%; animation-delay: 5s; width: 25px; height: 25px; }
+
+@keyframes parallaxFloat {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-20px) translateX(10px); }
+    50% { transform: translateY(0) translateX(20px); }
+    75% { transform: translateY(20px) translateX(10px); }
 }
 
 .particle {
@@ -1484,31 +1498,254 @@ body.light-mode .navbar {
     }
 }
 
-@keyframes bounceIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.3);
+/* Idea 6: Pulsing Accent Colors */
+@keyframes pulseAccent {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(100, 255, 218, 0.4);
     }
     50% {
-        opacity: 1;
-        transform: scale(1.05);
-    }
-    70% {
-        transform: scale(0.9);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1);
+        transform: scale(1.02);
+        box-shadow: 0 0 0 5px rgba(100, 255, 218, 0);
     }
 }
 
-@keyframes staggerFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
+.btn:hover {
+    animation: pulseAccent 2s ease-in-out infinite;
+}
+
+.social-icon:hover {
+    animation: pulseAccent 2s ease-in-out infinite;
+}
+
+.badge:hover {
+    animation: pulseAccent 2s ease-in-out infinite;
+}
+
+/* Idea 8: Animated Underlines/Highlights */
+@keyframes drawUnderline {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+.section-title::after {
+    animation: drawUnderline 3s ease-in-out infinite;
+}
+
+.nav-link::after {
+    animation: drawUnderline 2s ease-in-out infinite;
+}
+
+.project-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-color);
+    animation: drawUnderline 2s ease-in-out infinite;
+}
+
+/* ===================================
+   MOBILE RESPONSIVE STYLES
+   =================================== */
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
     }
-    to {
-        opacity: 1;
+
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Navigation */
+    .nav-container {
+        padding: 0 1rem;
+    }
+
+    .nav-logo {
+        font-size: 1rem;
+    }
+
+    .logo-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 1.25rem;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 25, 47, 0.95);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: var(--transition);
+        z-index: 999;
+    }
+
+    .nav-menu.open {
         transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-link {
+        font-size: 1.1rem;
+        padding: 0.75rem 0;
+    }
+
+    .nav-actions {
+        margin-top: 1rem;
+    }
+
+    /* Hero Section */
+    .hero-section {
+        padding: 4rem 1rem 2rem;
+        min-height: auto;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.25rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .hero-social {
+        justify-content: center;
+    }
+
+    .profile-card {
+        max-width: 280px;
+        margin: 0 auto;
+    }
+
+    /* Sections */
+    .section {
+        padding: 4rem 1rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    /* About Section */
+    .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    /* Experience Section */
+    .timeline-item {
+        padding-left: 40px;
+    }
+
+    .timeline::before {
+        left: 15px;
+    }
+
+    .timeline-dot {
+        left: 7px;
+    }
+
+    .timeline-content {
+        padding: 1.5rem;
+    }
+
+    /* Skills Section */
+    .skills-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .skill-category {
+        padding: 1.5rem;
+    }
+
+    /* Projects Section */
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .project-card {
+        max-width: 100%;
+    }
+
+    .project-content {
+        padding: 1.5rem;
+    }
+
+    /* Contact Section */
+    .contact-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .contact-form {
+        padding: 2rem 1.5rem;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 1.5rem 1rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .about-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
     }
 }
