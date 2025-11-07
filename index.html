@@ -370,6 +370,7 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?ixlib=rb-4.0.3&auto=format&fit=crop&w=320&h=200&q=80" alt="Digital Notes Wallet Screenshot" class="project-screenshot">
                         <div class="project-overlay">
                             <a href="https://github.com/joshi-07/dbit-notes-wallet" target="_blank" class="project-link">
                                 <i class="fas fa-external-link-alt"></i>
@@ -425,6 +426,7 @@
                 </div>
                 <div class="project-card">
                     <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1586953208448-b95a79798f07?ixlib=rb-4.0.3&auto=format&fit=crop&w=320&h=200&q=80" alt="Resume Application Screenshot" class="project-screenshot">
                         <div class="project-overlay">
                             <a href="https://github.com/joshi-07/resume_app" target="_blank" class="project-link">
                                 <i class="fas fa-external-link-alt"></i>
@@ -451,6 +453,7 @@
                 </div>
                 <div class="project-card">
                     <div class="project-image">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=320&h=200&q=80" alt="Portfolio Website Screenshot" class="project-screenshot">
                         <div class="project-overlay">
                             <a href="https://github.com/joshi-07/my_portfolio" target="_blank" class="project-link">
                                 <i class="fas fa-external-link-alt"></i>
@@ -554,6 +557,84 @@
         </div>
     </section>
 
+    <!-- Quick Stats Recap Section -->
+    <section id="stats-recap" class="section stats-recap-section">
+        <div class="container">
+            <div class="stats-recap-content">
+                <div class="stats-recap-header">
+                    <h3>At a Glance</h3>
+                    <p>My journey in numbers</p>
+                </div>
+                <div class="stats-recap-grid">
+                    <div class="recap-stat">
+                        <div class="recap-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="recap-number" data-target="5">0</div>
+                        <div class="recap-label">Programming Languages</div>
+                    </div>
+                    <div class="recap-stat">
+                        <div class="recap-icon">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <div class="recap-number" data-target="10">0</div>
+                        <div class="recap-label">Projects Completed</div>
+                    </div>
+                    <div class="recap-stat">
+                        <div class="recap-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="recap-number" data-target="2">0</div>
+                        <div class="recap-label">Years Experience</div>
+                    </div>
+                    <div class="recap-stat">
+                        <div class="recap-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="recap-number" data-target="3">0</div>
+                        <div class="recap-label">GPA Achievement</div>
+                    </div>
+                    <div class="recap-stat">
+                        <div class="recap-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="recap-number" data-target="50">0</div>
+                        <div class="recap-label">Happy Clients</div>
+                    </div>
+                    <div class="recap-stat">
+                        <div class="recap-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="recap-number" data-target="15">0</div>
+                        <div class="recap-label">Certifications</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Indicators -->
+    <div class="progress-container">
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        <div class="progress-dots">
+            <span class="progress-dot active" data-section="home"></span>
+            <span class="progress-dot" data-section="about"></span>
+            <span class="progress-dot" data-section="experience"></span>
+            <span class="progress-dot" data-section="skills"></span>
+            <span class="progress-dot" data-section="projects"></span>
+            <span class="progress-dot" data-section="contact"></span>
+        </div>
+    </div>
+
+    <!-- Visual Separators -->
+    <div class="section-separator separator-about"></div>
+    <div class="section-separator separator-experience"></div>
+    <div class="section-separator separator-skills"></div>
+    <div class="section-separator separator-projects"></div>
+    <div class="section-separator separator-contact"></div>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
@@ -582,6 +663,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Tooltip Container -->
+    <div id="tooltip" class="tooltip"></div>
 
     <script src="script.js"></script>
 </body>

@@ -238,28 +238,237 @@ document.addEventListener('DOMContentLoaded', function() {
         animateObserver.observe(el);
     });
 
-    // Tooltip for social buttons
-    document.querySelectorAll('.buttons button').forEach(button => {
-        button.addEventListener('mouseenter', function(e) {
-            const tooltip = document.createElement('div');
-            tooltip.textContent = button.id.charAt(0).toUpperCase() + button.id.slice(1);
-            tooltip.style.position = 'absolute';
-            tooltip.style.background = 'rgba(0,0,0,0.8)';
-            tooltip.style.color = 'white';
-            tooltip.style.padding = '5px 10px';
-            tooltip.style.borderRadius = '5px';
-            tooltip.style.fontSize = '12px';
-            tooltip.style.pointerEvents = 'none';
-            tooltip.style.zIndex = '1000';
-            document.body.appendChild(tooltip);
+    // Progress indicators and scroll tracking
+    const progressFill = document.querySelector('.progress-fill');
+    const progressDots = document.querySelectorAll('.progress-dot');
+    const sections = document.querySelectorAll('section');
 
-            const rect = button.getBoundingClientRect();
-            tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
-            tooltip.style.top = rect.top - 30 + 'px';
+    function updateProgress() {
+        const scrollTop = window.pageYOffset;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (scrollTop / docHeight) * 100;
+        progressFill.style.width = scrollPercent + '%';
 
-            button.addEventListener('mouseleave', function() {
-                document.body.removeChild(tooltip);
-            });
+        // Update active dot based on current section
+        let currentSection = '';
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                currentSection = section.id;
+            }
+        });
+
+        progressDots.forEach(dot => {
+            dot.classList.remove('active');
+            if (dot.dataset.section === currentSection) {
+                dot.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateProgress);
+    updateProgress();
+
+    // Progress dot navigation
+    progressDots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const targetSection = document.getElementById(this.dataset.section);
+            if (targetSection) {
+                targetSection.scrollIntoView({ behavior: 'smooth' });
+            }
         });
     });
+
+    // Typing effect for stats
+    const statNumbers = document.querySelectorAll('.stat-number');
+    const originalNumbers = Array.from(statNumbers).map(stat => parseInt(stat.textContent.replace(/[^\d]/g, '')));
+
+    function animateStats() {
+        statNumbers.forEach((stat, index) => {
+            const target = originalNumbers[index];
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                stat.textContent = Math.floor(current) + (stat.textContent.includes('+') ? '+' : '');
+            }, 30);
+        });
+    }
+
+    // Trigger stats animation on scroll
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateStats();
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.querySelector('.about-stats').querySelectorAll('.stat-item').forEach(stat => {
+        statsObserver.observe(stat);
+    });
+
+    // Staggered reveal for skill badges
+    const skillBadges = document.querySelectorAll('.badge');
+    const badgeObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    skillBadges.forEach(badge => {
+        badge.style.opacity = '0';
+        badge.style.transform = 'translateY(20px)';
+        badge.style.transition = 'all 0.5s ease';
+        badgeObserver.observe(badge);
+    });
+
+    // Staggered reveal for project tech tags
+    const techTags = document.querySelectorAll('.tech-tag');
+    const techObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateX(0)';
+                }, index * 50);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    techTags.forEach(tag => {
+        tag.style.opacity = '0';
+        tag.style.transform = 'translateX(-20px)';
+        tag.style.transition = 'all 0.5s ease';
+        techObserver.observe(tag);
+    });
+
+    // Enhanced tooltip system
+    const tooltip = document.getElementById('tooltip');
+    let tooltipTimeout;
+
+    function showTooltip(content, x, y) {
+        clearTimeout(tooltipTimeout);
+        tooltip.textContent = content;
+        tooltip.style.left = x + 'px';
+        tooltip.style.top = (y - 10) + 'px';
+        tooltip.classList.add('show');
+    }
+
+    function hideTooltip() {
+        tooltipTimeout = setTimeout(() => {
+            tooltip.classList.remove('show');
+        }, 200);
+    }
+
+    // Tooltips for skills
+    document.querySelectorAll('.skill-item').forEach(item => {
+        item.addEventListener('mouseenter', function(e) {
+            const skillName = this.querySelector('.skill-name').textContent;
+            const skillPercent = this.querySelector('.skill-percent').textContent;
+            const content = `${skillName}: ${skillPercent} proficiency`;
+            showTooltip(content, e.pageX, e.pageY);
+        });
+        item.addEventListener('mouseleave', hideTooltip);
+        item.addEventListener('mousemove', function(e) {
+            tooltip.style.left = e.pageX + 'px';
+            tooltip.style.top = (e.pageY - 10) + 'px';
+        });
+    });
+
+    // Tooltips for projects
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('mouseenter', function(e) {
+            const title = this.querySelector('.project-title').textContent;
+            const description = this.querySelector('.project-description').textContent;
+            const content = `${title}: ${description.substring(0, 100)}...`;
+            showTooltip(content, e.pageX, e.pageY);
+        });
+        card.addEventListener('mouseleave', hideTooltip);
+        card.addEventListener('mousemove', function(e) {
+            tooltip.style.left = e.pageX + 'px';
+            tooltip.style.top = (e.pageY - 10) + 'px';
+        });
+    });
+
+    // Tooltips for contact methods
+    document.querySelectorAll('.contact-method').forEach(method => {
+        method.addEventListener('mouseenter', function(e) {
+            const title = this.querySelector('h4').textContent;
+            const link = this.querySelector('a').textContent;
+            const content = `${title}: ${link}`;
+            showTooltip(content, e.pageX, e.pageY);
+        });
+        method.addEventListener('mouseleave', hideTooltip);
+        method.addEventListener('mousemove', function(e) {
+            tooltip.style.left = e.pageX + 'px';
+            tooltip.style.top = (e.pageY - 10) + 'px';
+        });
+    });
+
+    // Parallax effect for section elements
+    function updateParallax() {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * -0.5;
+
+        document.querySelectorAll('.section-parallax').forEach((element, index) => {
+            const speed = (index % 2 === 0) ? 0.3 : -0.3;
+            element.style.transform = `translateY(${rate * speed}px)`;
+        });
+    }
+
+    window.addEventListener('scroll', updateParallax);
+
+    // Add floating elements to sections
+    const sectionsList = ['about', 'experience', 'skills', 'projects', 'contact'];
+    sectionsList.forEach(sectionId => {
+        const section = document.getElementById(sectionId + '-section') || document.getElementById(sectionId);
+        if (section) {
+            for (let i = 0; i < 2; i++) {
+                const element = document.createElement('div');
+                element.className = 'section-floating-element';
+                section.appendChild(element);
+            }
+            for (let i = 0; i < 2; i++) {
+                const element = document.createElement('div');
+                element.className = 'section-parallax';
+                section.appendChild(element);
+            }
+        }
+    });
+
+    // Enhanced hover effects with sound-like feedback (visual)
+    document.querySelectorAll('.timeline-content, .project-card, .contact-method').forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            this.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+        });
+        element.addEventListener('mouseleave', function() {
+            this.style.transition = 'all 0.3s ease';
+        });
+    });
+
+    // Tooltip for social buttons (updated)
+    document.querySelectorAll('.buttons button').forEach(button => {
+        button.addEventListener('mouseenter', function(e) {
+            const content = button.id.charAt(0).toUpperCase() + button.id.slice(1) + ' - Click to connect';
+            showTooltip(content, e.pageX, e.pageY);
+        });
+        button.addEventListener('mouseleave', hideTooltip);
+        button.addEventListener('mousemove', function(e) {
+            tooltip.style.left = e.pageX + 'px';
+            tooltip.style.top = (e.pageY - 10) + 'px';
+        });
+    });
+
+
 });
