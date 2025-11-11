@@ -4,25 +4,76 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check for prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    // Cursor Trail Effect
+    const cursorTrail = document.querySelector('.cursor-trail');
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+
+    if (cursorTrail && !prefersReducedMotion) {
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorTrail.classList.add('active');
+        });
+
+        function animateTrail() {
+            const dx = mouseX - trailX;
+            const dy = mouseY - trailY;
+            trailX += dx * 0.1;
+            trailY += dy * 0.1;
+            
+            cursorTrail.style.left = trailX + 'px';
+            cursorTrail.style.top = trailY + 'px';
+            
+            requestAnimationFrame(animateTrail);
+        }
+        animateTrail();
+
+        // Hide trail when mouse leaves window
+        document.addEventListener('mouseleave', () => {
+            cursorTrail.classList.remove('active');
+        });
+    }
+
+    // Glitch Effect for Section Titles
+    if (!prefersReducedMotion) {
+        const sectionTitles = document.querySelectorAll('.section-title');
+        sectionTitles.forEach(title => {
+            title.addEventListener('mouseenter', function() {
+                this.style.animation = 'none';
+                setTimeout(() => {
+                    this.style.animation = 'glitch 0.3s';
+                }, 10);
+            });
+        });
+    }
+
     // Track if user has scrolled
     window.addEventListener('scroll', () => {
         hasScrolled = true;
     });
 
-    // Typewriter effect for hero title (skip if reduced motion)
+    // Enhanced Typewriter effect for hero title with blinking cursor
     if (!prefersReducedMotion) {
         const heroTitle = document.querySelector('.hero-title');
-        const originalText = heroTitle.textContent;
-        heroTitle.textContent = '';
-        let i = 0;
-        const typeWriter = () => {
-            if (i < originalText.length) {
-                heroTitle.textContent += originalText.charAt(i);
-                i++;
-                requestAnimationFrame(typeWriter);
-            }
-        };
-        setTimeout(typeWriter, 1000); // Start after 1 second
+        if (heroTitle) {
+            const originalText = heroTitle.textContent.replace('|', '').trim();
+            heroTitle.textContent = '';
+            let i = 0;
+            const typeSpeed = 80; // milliseconds per character
+            
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    heroTitle.textContent = originalText.substring(0, i + 1) + '<span class="cursor-blink">|</span>';
+                    i++;
+                    setTimeout(typeWriter, typeSpeed);
+                } else {
+                    // Keep blinking cursor after typing is complete
+                    heroTitle.innerHTML = originalText + '<span class="cursor-blink">|</span>';
+                }
+            };
+            setTimeout(typeWriter, 1000); // Start after 1 second
+        }
     }
 
     const links = {
@@ -166,9 +217,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Skill progress bars
+        // Skill progress bars with neon animation
         document.querySelectorAll('.skill-progress').forEach(progress => {
             animationObserver.observe(progress);
+            // Animate progress on scroll
+            const progressObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !prefersReducedMotion) {
+                        const targetProgress = entry.target.dataset.progress;
+                        setTimeout(() => {
+                            entry.target.style.width = targetProgress + '%';
+                        }, 200);
+                        progressObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+            progressObserver.observe(progress);
         });
 
         // Skill badges
@@ -412,18 +476,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Parallax effect for section elements
+    // Enhanced Parallax effect with smoke/drift animation
     function updateParallax() {
+        if (prefersReducedMotion) return;
+        
         const scrolled = window.pageYOffset;
         const rate = scrolled * -0.5;
 
         document.querySelectorAll('.section-parallax').forEach((element, index) => {
             const speed = (index % 2 === 0) ? 0.3 : -0.3;
-            element.style.transform = `translateY(${rate * speed}px)`;
+            const drift = Math.sin(scrolled * 0.001 + index) * 20;
+            element.style.transform = `translateY(${rate * speed + drift}px) translateX(${drift * 0.5}px)`;
+        });
+
+        // Animate background particles
+        document.querySelectorAll('.particle').forEach((particle, index) => {
+            const speed = 0.1 + (index % 3) * 0.05;
+            const offset = scrolled * speed;
+            particle.style.transform = `translateY(${offset}px)`;
         });
     }
 
-    window.addEventListener('scroll', updateParallax);
+    window.addEventListener('scroll', updateParallax, { passive: true });
 
     // Add floating elements to sections
     const sectionsList = ['about', 'experience', 'skills', 'projects', 'contact'];
@@ -443,13 +517,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Enhanced hover effects with sound-like feedback (visual)
-    document.querySelectorAll('.timeline-content, .contact-method').forEach(element => {
+    // Enhanced hover effects with neon glow
+    document.querySelectorAll('.timeline-content, .contact-method, .skill-category').forEach(element => {
         element.addEventListener('mouseenter', function() {
             this.style.transition = 'all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            // Add subtle glow pulse
+            this.style.filter = 'brightness(1.1)';
         });
         element.addEventListener('mouseleave', function() {
             this.style.transition = 'all 0.3s ease';
+            this.style.filter = 'brightness(1)';
         });
     });
 
