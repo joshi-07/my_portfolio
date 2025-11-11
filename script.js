@@ -4,12 +4,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check for prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Cursor Trail Effect
+    // Detect touch device
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    // Cursor Trail Effect (only for non-touch devices)
     const cursorTrail = document.querySelector('.cursor-trail');
     let mouseX = 0, mouseY = 0;
     let trailX = 0, trailY = 0;
 
-    if (cursorTrail && !prefersReducedMotion) {
+    if (cursorTrail && !prefersReducedMotion && !isTouchDevice) {
         document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
@@ -33,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
         document.addEventListener('mouseleave', () => {
             cursorTrail.classList.remove('active');
         });
+    } else if (cursorTrail) {
+        // Hide cursor trail on touch devices
+        cursorTrail.style.display = 'none';
     }
 
     // Glitch Effect for Section Titles
@@ -103,12 +109,29 @@ document.addEventListener('DOMContentLoaded', function() {
         navMenu.classList.toggle('open');
         mobileMenuToggle.classList.toggle('active');
         body.classList.toggle('menu-open');
+        
+        // Prevent body scroll when menu is open
+        if (navMenu.classList.contains('open')) {
+            body.style.overflow = 'hidden';
+        } else {
+            body.style.overflow = '';
+        }
     }
 
-    mobileMenuToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        toggleMobileMenu();
-    });
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            toggleMobileMenu();
+        });
+
+        // Touch event for better mobile support
+        mobileMenuToggle.addEventListener('touchend', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            toggleMobileMenu();
+        });
+    }
 
     // Close mobile menu when clicking on a link
     document.querySelectorAll('.nav-link').forEach(link => {
@@ -116,26 +139,29 @@ document.addEventListener('DOMContentLoaded', function() {
             navMenu.classList.remove('open');
             mobileMenuToggle.classList.remove('active');
             body.classList.remove('menu-open');
+            body.style.overflow = '';
         });
     });
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', function(e) {
-        if (navMenu.classList.contains('open') && 
+        if (navMenu && navMenu.classList.contains('open') && 
             !navMenu.contains(e.target) && 
-            !mobileMenuToggle.contains(e.target)) {
+            mobileMenuToggle && !mobileMenuToggle.contains(e.target)) {
             navMenu.classList.remove('open');
             mobileMenuToggle.classList.remove('active');
             body.classList.remove('menu-open');
+            body.style.overflow = '';
         }
     });
 
     // Close mobile menu on escape key
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && navMenu.classList.contains('open')) {
+        if (e.key === 'Escape' && navMenu && navMenu.classList.contains('open')) {
             navMenu.classList.remove('open');
             mobileMenuToggle.classList.remove('active');
             body.classList.remove('menu-open');
+            body.style.overflow = '';
         }
     });
 
@@ -530,10 +556,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // 3D Tilt Effect for Project Cards
+    // 3D Tilt Effect for Project Cards (only for non-touch devices)
     const projectCards = document.querySelectorAll('.project-card');
 
-    if (!prefersReducedMotion) {
+    if (!prefersReducedMotion && !isTouchDevice) {
         projectCards.forEach(card => {
             card.addEventListener('mouseenter', function() {
                 this.style.transition = 'transform 0.1s ease-out';
