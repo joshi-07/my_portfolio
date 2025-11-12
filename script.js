@@ -7,6 +7,95 @@ document.addEventListener('DOMContentLoaded', function() {
     // Detect touch device
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
+    // ===================================
+    // AI-7 Robot Companion Integration
+    // ===================================
+
+    // Enhanced typewriter effect for futuristic home page title
+    if (!prefersReducedMotion) {
+        const futuristicTitle = document.querySelector('.home-content h1');
+        if (futuristicTitle) {
+            const originalText = futuristicTitle.textContent;
+            futuristicTitle.textContent = '';
+            let i = 0;
+            const typeSpeed = 100; // Slightly faster for futuristic feel
+
+            const typeWriter = () => {
+                if (i < originalText.length) {
+                    futuristicTitle.textContent = originalText.substring(0, i + 1);
+                    i++;
+                    setTimeout(typeWriter, typeSpeed);
+                } else {
+                    // Add glow effect when complete
+                    futuristicTitle.classList.add('typing-complete');
+                }
+            };
+            setTimeout(typeWriter, 800); // Start after page loads
+        }
+    }
+
+    // Listen for robot companion events
+    document.addEventListener('contentFlow', function(e) {
+        // Update UI based on content flow events
+        if (e.detail.type === 'sectionEnter' && e.detail.sectionId !== 'home') {
+            // User has left the home section, robot should be hidden/faded
+            document.body.classList.add('robot-hidden');
+        } else if (e.detail.type === 'sectionEnter' && e.detail.sectionId === 'home') {
+            // User is back on home section
+            document.body.classList.remove('robot-hidden');
+        }
+    });
+
+    // Enhanced floating icons for home page
+    const floatingIcons = document.querySelectorAll('.floating-icon');
+    if (floatingIcons.length > 0 && !prefersReducedMotion) {
+        floatingIcons.forEach((icon, index) => {
+            // Set initial positions and animations
+            const delay = index * 0.2;
+            const duration = 3 + Math.random() * 2;
+
+            icon.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+            icon.style.opacity = '0';
+            icon.style.transform = 'translateY(20px)';
+
+            // Fade in after delay
+            setTimeout(() => {
+                icon.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                icon.style.opacity = '1';
+                icon.style.transform = 'translateY(0)';
+            }, 1000 + (delay * 1000));
+        });
+    }
+
+    // Add enhanced parallax for robot section
+    function updateRobotParallax() {
+        if (prefersReducedMotion) return;
+
+        const scrolled = window.scrollY;
+        const homeSection = document.getElementById('home');
+
+        if (homeSection) {
+            const rect = homeSection.getBoundingClientRect();
+            const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+
+            if (isVisible) {
+                const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+
+                // Apply subtle parallax to floating icons
+                floatingIcons.forEach((icon, index) => {
+                    const speed = 0.5 + (index % 3) * 0.2;
+                    const yPos = (scrolled * speed) * (1 - progress);
+                    icon.style.transform = `translateY(${yPos}px)`;
+                });
+            }
+        }
+    }
+
+    // Add scroll listener for robot parallax
+    if (floatingIcons.length > 0) {
+        window.addEventListener('scroll', updateRobotParallax, { passive: true });
+    }
+
     // Cursor Trail Effect (only for non-touch devices)
     const cursorTrail = document.querySelector('.cursor-trail');
     let mouseX = 0, mouseY = 0;
