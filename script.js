@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Progress indicators and scroll tracking
     const progressFill = document.querySelector('.progress-fill');
     const progressDots = document.querySelectorAll('.progress-dot');
-    const sections = document.querySelectorAll('section');
+    const sections = document.querySelectorAll('.portfolio-section, .home-section');
 
     let ticking = false;
     function updateProgress() {
