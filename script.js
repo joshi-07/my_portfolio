@@ -614,11 +614,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('scroll', updateParallax, { passive: true });
 
-    // Add floating elements to sections
-    const sectionsList = ['about', 'experience', 'skills', 'projects', 'contact'];
+    // Add floating elements to portfolio sections (excluding home which has robot)
+    const sectionsList = ['about', 'experience', 'skills', 'projects', 'contact', 'stats-recap'];
     sectionsList.forEach(sectionId => {
-        const section = document.getElementById(sectionId + '-section') || document.getElementById(sectionId);
-        if (section) {
+        const section = document.getElementById(sectionId);
+        if (section && section.classList.contains('portfolio-section')) {
             for (let i = 0; i < 2; i++) {
                 const element = document.createElement('div');
                 element.className = 'section-floating-element';
