@@ -135,8 +135,8 @@ body {
         rgba(8, 247, 254, 0.03) 50%
     );
     background-size: 100% 4px;
-    animation: scanlines 8s linear infinite;
-    opacity: 0.3;
+    /* Make scanlines much more subtle and static to avoid flicker */
+    opacity: 0.12;
 }
 
 @keyframes scanlines {
@@ -153,9 +153,9 @@ body {
     height: 100%;
     pointer-events: none;
     z-index: 9998;
-    opacity: 0.03;
+    opacity: 0.02;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    animation: noise 0.2s infinite;
+    /* Keep noise static to reduce visual flicker */
 }
 
 @keyframes noise {
@@ -540,19 +540,14 @@ body.light-mode .navbar {
 }
 
 .cursor-blink {
-    animation: blink 1s infinite;
+    /* Slightly slower, softer blink to reduce distraction */
+    animation: blink 1.5s infinite;
     color: var(--neon-blue);
     text-shadow: 0 0 10px var(--neon-blue);
     margin-left: 5px;
 }
 
-.hero-title::after {
-    content: '|';
-    animation: blink 1s infinite;
-    color: var(--neon-blue);
-    text-shadow: 0 0 10px var(--neon-blue);
-    margin-left: 5px;
-}
+/* Cursor is now fully controlled from JS using .cursor-blink span */
 
 .hero-subtitle {
     font-size: 1.5rem;
@@ -919,7 +914,7 @@ body.light-mode .navbar {
     text-transform: uppercase;
     letter-spacing: 3px;
     text-shadow: 0 0 20px rgba(8, 247, 254, 0.5);
-    animation: glitch 5s infinite;
+    /* Glitch animation is now triggered on hover via JS for less constant motion */
 }
 
 @keyframes glitch {
@@ -2255,8 +2250,50 @@ body.light-mode .navbar {
     }
 }
 
-/* Duplicate mobile styles removed - using comprehensive mobile styles below */
+/* Mobile navigation and layout tweaks */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
 
+    .nav-menu {
+        display: none; /* hidden by default on mobile */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(5, 5, 5, 0.96);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 1.5rem 2rem; /* push items below logo/nav */
+        gap: 1.25rem;
+        z-index: 10000; /* above navbar and background overlays */
+        overflow-y: auto;
+    }
+
+    .nav-menu.open {
+        display: flex;
+    }
+
+    .nav-link {
+        font-size: 0.85rem;
+        padding: 0.35rem 0;
+    }
+
+    .nav-actions {
+        margin-left: 0.5rem;
+    }
+
+    /* Hide side progress bar and dots on mobile to avoid overlap with menu */
+    .progress-container {
+        display: none;
+    }
+}
+
+/* Extra-small screens (phones) */
 @media (max-width: 480px) {
     .hero-title {
         font-size: 2rem;

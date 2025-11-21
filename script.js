@@ -67,10 +67,10 @@ document.addEventListener('DOMContentLoaded', function() {
             heroTitle.textContent = '';
             let i = 0;
             const typeSpeed = 80; // milliseconds per character
-            
+
             const typeWriter = () => {
                 if (i < originalText.length) {
-                    heroTitle.textContent = originalText.substring(0, i + 1) + '<span class="cursor-blink">|</span>';
+                    heroTitle.innerHTML = originalText.substring(0, i + 1) + '<span class="cursor-blink">|</span>';
                     i++;
                     setTimeout(typeWriter, typeSpeed);
                 } else {
@@ -502,10 +502,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Enhanced Parallax effect with smoke/drift animation
+    // Enhanced Parallax effect with smoke/drift animation (throttled with requestAnimationFrame)
+    let parallaxTicking = false;
+
     function updateParallax() {
         if (prefersReducedMotion) return;
-        
+
         const scrolled = window.pageYOffset;
         const rate = scrolled * -0.5;
 
@@ -521,9 +523,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const offset = scrolled * speed;
             particle.style.transform = `translateY(${offset}px)`;
         });
+
+        parallaxTicking = false;
     }
 
-    window.addEventListener('scroll', updateParallax, { passive: true });
+    function onScrollParallax() {
+        if (!parallaxTicking) {
+            parallaxTicking = true;
+            requestAnimationFrame(updateParallax);
+        }
+    }
+
+    window.addEventListener('scroll', onScrollParallax, { passive: true });
 
     // Add floating elements to sections
     const sectionsList = ['about', 'experience', 'skills', 'projects', 'contact'];
