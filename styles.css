@@ -836,8 +836,8 @@ body.light-mode .navbar {
     padding: 0.5rem 1rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
+    gap: 1.5rem;
+    font-size: 0.75rem;
     white-space: nowrap;
 }
 
@@ -1147,7 +1147,14 @@ body.light-mode .navbar {
     top: 0;
     bottom: 0;
     width: 2px;
-    background: var(--border-color);
+    background: linear-gradient(180deg, rgba(8, 247, 254, 0.1), rgba(254, 83, 187, 0.8), rgba(8, 247, 254, 0.1));
+    background-size: 100% 200%;
+    animation: timelineFlow 8s linear infinite;
+}
+
+@keyframes timelineFlow {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 200%; }
 }
 
 .timeline-item {
@@ -1167,12 +1174,15 @@ body.light-mode .navbar {
     border-radius: 50%;
     border: 4px solid var(--bg-dark);
     box-shadow: 0 0 0 4px var(--border-color), 0 0 15px var(--shadow-neon-blue);
-    animation: dotPulse 2s ease-in-out infinite;
 }
 
 @keyframes dotPulse {
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.timeline-item:hover .timeline-dot {
+    animation: dotPulse 2s ease-in-out infinite;
 }
 
 .timeline-content {
@@ -1343,12 +1353,18 @@ body.light-mode .navbar {
     right: 0;
     bottom: 0;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    animation: shimmer 2s infinite;
+    opacity: 0;
 }
 
 @keyframes shimmer {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
+}
+
+/* Trigger shimmer once when activated */
+.skill-progress.shimmer-active::after {
+    opacity: 1;
+    animation: shimmer 2s linear forwards;
 }
 
 .skill-badges {
@@ -1412,7 +1428,7 @@ body.light-mode .navbar {
     border: 1px solid var(--glass-border);
     border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.1s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
     cursor: pointer;
     backdrop-filter: blur(10px);
     box-shadow: var(--glass-shadow);
@@ -1441,7 +1457,7 @@ body.light-mode .navbar {
 .project-card:hover {
     border-color: var(--neon-blue);
     box-shadow: 0 0 40px var(--shadow-neon-blue), 0 25px 60px rgba(8, 247, 254, 0.3);
-    transform: translateY(-10px);
+    transform: translateY(-6px);
 }
 
 .project-card:hover::before {

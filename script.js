@@ -253,6 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const targetProgress = entry.target.dataset.progress;
                         setTimeout(() => {
                             entry.target.style.width = targetProgress + '%';
+                            entry.target.classList.add('shimmer-active');
                         }, 200);
                         progressObserver.unobserve(entry.target);
                     }
@@ -584,10 +585,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
 
-                const rotateX = (y - centerY) / 10;
-                const rotateY = (centerX - x) / 10;
+                const rotateX = Math.max(-8, Math.min(8, (y - centerY) / 20));
+                const rotateY = Math.max(-8, Math.min(8, (centerX - x) / 20));
 
-                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
+                this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px) scale(1.01)`;
             });
 
             card.addEventListener('mouseleave', function() {
@@ -746,6 +747,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (response.ok) {
                     showFormMessage('Message sent successfully! I\'ll get back to you soon.', 'success');
+                    playUISound();
                     contactForm.reset();
                     formInputs.forEach(input => {
                         input.classList.remove('error');
@@ -809,24 +811,147 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Smooth scroll with offset for fixed navbar
+    function smoothScrollToSection(sectionId) {
+        const target = document.getElementById(sectionId);
+        if (!target) return;
+        const navbar = document.querySelector('.navbar');
+        const navbarHeight = navbar ? navbar.offsetHeight : 0;
+        const targetPosition = target.offsetTop - navbarHeight - 20;
+        window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+        });
+    }
+
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             if (href === '#') return;
-            
-            const target = document.querySelector(href);
-            if (target) {
+            const id = href.replace('#', '');
+            if (document.getElementById(id)) {
                 e.preventDefault();
-                const navbarHeight = document.querySelector('.navbar').offsetHeight;
-                const targetPosition = target.offsetTop - navbarHeight - 20;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                smoothScrollToSection(id);
             }
         });
     });
+
+    // Lightweight UI sound using Web Audio (no external file)
+    let audioContext = null;
+    let soundEnabled = true;
+
+    function playUISound() {
+        if (!soundEnabled || prefersReducedMotion) return;
+        try {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            const duration = 0.08;
+            const oscillator = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            oscillator.type = 'square';
+            oscillator.frequency.setValueAtTime(880, audioContext.currentTime);
+            gain.gain.setValueAtTime(0.08, audioContext.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+            oscillator.connect(gain);
+            gain.connect(audioContext.destination);
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + duration);
+        } catch (e) {}
+    }
+
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundToggle) {
+        const savedSound = localStorage.getItem('ui-sound') || 'on';
+        soundEnabled = savedSound !== 'off';
+        if (!soundEnabled) {
+            soundToggle.classList.add('muted');
+        }
+        soundToggle.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            soundToggle.classList.toggle('muted', !soundEnabled);
+            localStorage.setItem('ui-sound', soundEnabled ? 'on' : 'off');
+            if (soundEnabled) playUISound();
+        });
+    }
+
+    // Keyboard shortcuts 1-5 to jump to main sections (desktop only)
+    const sectionShortcuts = {
+        '1': 'home',
+        '2': 'about',
+        '3': 'experience',
+        '4': 'skills',
+        '5': 'projects'
+    };
+
+    document.addEventListener('keydown', (e) => {
+        if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+        const id = sectionShortcuts[e.key];
+        if (id) {
+            e.preventDefault();
+            smoothScrollToSection(id);
+            playUISound();
+        }
+    });
+
+    // Project focus modal
+    const projectModal = document.getElementById('project-modal');
+    const modalTitle = projectModal ? projectModal.querySelector('.project-modal-title') : null;
+    const modalDescription = projectModal ? projectModal.querySelector('.project-modal-description') : null;
+    const modalTech = projectModal ? projectModal.querySelector('.project-modal-tech') : null;
+    const modalLinks = projectModal ? projectModal.querySelector('.project-modal-links') : null;
+
+    function closeProjectModal() {
+        if (!projectModal) return;
+        projectModal.classList.remove('open');
+        projectModal.setAttribute('aria-hidden', 'true');
+    }
+
+    function openProjectModal(card) {
+        if (!projectModal || !modalTitle || !modalDescription || !modalTech || !modalLinks) return;
+        const title = card.querySelector('.project-title');
+        const desc = card.querySelector('.project-description');
+        const techTags = card.querySelectorAll('.tech-tag');
+        const mainLink = card.querySelector('.project-btn');
+        const overlayLink = card.querySelector('.project-link');
+
+        modalTitle.textContent = title ? title.textContent : 'Project';
+        modalDescription.textContent = desc ? desc.textContent : '';
+        modalTech.innerHTML = '';
+        techTags.forEach(tag => {
+            const clone = tag.cloneNode(true);
+            modalTech.appendChild(clone);
+        });
+        modalLinks.innerHTML = '';
+        if (mainLink) {
+            const a = mainLink.cloneNode(true);
+            a.removeAttribute('tabindex');
+            modalLinks.appendChild(a);
+        }
+        if (overlayLink && overlayLink.href) {
+            const extra = overlayLink.cloneNode(true);
+            extra.textContent = 'Live Demo';
+            modalLinks.appendChild(extra);
+        }
+
+        projectModal.classList.add('open');
+        projectModal.setAttribute('aria-hidden', 'false');
+        playUISound();
+    }
+
+    if (projectModal) {
+        projectModal.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target.matches('[data-close="project-modal"], .project-modal-backdrop')) {
+                closeProjectModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && projectModal.classList.contains('open')) {
+                closeProjectModal();
+            }
+        });
+    }
 
     // Lazy load images
     if ('IntersectionObserver' in window) {
