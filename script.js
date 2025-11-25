@@ -59,6 +59,116 @@ document.addEventListener('DOMContentLoaded', function() {
         hasScrolled = true;
     });
 
+    // =============================
+    // Lenis Smooth Scroll Setup
+    // =============================
+    let lenis = null;
+    if (window.Lenis && !prefersReducedMotion) {
+        lenis = new Lenis({
+            smooth: true,
+            lerp: 0.08,
+            wheelMultiplier: 1.1,
+            touchMultiplier: 1.2,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // Proxy scroll events to existing listeners
+        lenis.on('scroll', () => {
+            window.dispatchEvent(new Event('scroll'));
+        });
+    }
+
+    // =============================
+    // GSAP + ScrollTrigger Animations
+    // =============================
+    const pageTransitionOverlay = document.querySelector('.page-transition-overlay');
+
+    function playPageTransition(onComplete) {
+        if (!window.gsap || !pageTransitionOverlay) {
+            if (typeof onComplete === 'function') onComplete();
+            return;
+        }
+
+        const tl = gsap.timeline({
+            defaults: { ease: 'power3.inOut' },
+            onComplete,
+        });
+
+        tl.set(pageTransitionOverlay, { opacity: 1 })
+          .fromTo(
+              pageTransitionOverlay,
+              { scaleX: 0, transformOrigin: 'left center' },
+              { scaleX: 1, duration: 0.5 }
+          )
+          .to(pageTransitionOverlay, {
+              scaleX: 0,
+              transformOrigin: 'right center',
+              duration: 0.5,
+              delay: 0.1,
+          });
+    }
+
+    if (window.gsap && window.ScrollTrigger && !prefersReducedMotion) {
+        gsap.registerPlugin(ScrollTrigger);
+
+        const heroSection = document.querySelector('.hero-section');
+        const heroText = document.querySelector('.hero-text');
+        const heroAnimations = document.querySelector('.hero-animations');
+
+        if (heroSection && heroText) {
+            gsap.fromTo(
+                heroText,
+                { opacity: 0, y: 40 },
+                { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.4 }
+            );
+        }
+
+        if (heroAnimations) {
+            gsap.fromTo(
+                heroAnimations,
+                { opacity: 0, y: 40 },
+                { opacity: 1, y: 0, duration: 1.2, ease: 'power3.out', delay: 0.7 }
+            );
+        }
+
+        // Section reveal timeline
+        gsap.utils.toArray('section').forEach((section) => {
+            if (!section.id || section.id === 'home') return;
+
+            gsap.from(section, {
+                opacity: 0,
+                y: 60,
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse',
+                },
+            });
+        });
+
+        // Parallax hero background
+        const heroBg = document.querySelector('.hero-background');
+        if (heroBg) {
+            gsap.to(heroBg, {
+                yPercent: 8,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: heroSection || heroBg,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: true,
+                },
+            });
+        }
+    }
+
     // Enhanced Typewriter effect for hero title with blinking cursor
     if (!prefersReducedMotion) {
         const heroTitle = document.querySelector('.hero-title');
@@ -810,17 +920,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Smooth scroll with offset for fixed navbar
+    // Smooth scroll with offset for fixed navbar (Lenis-aware)
     function smoothScrollToSection(sectionId) {
         const target = document.getElementById(sectionId);
         if (!target) return;
         const navbar = document.querySelector('.navbar');
         const navbarHeight = navbar ? navbar.offsetHeight : 0;
         const targetPosition = target.offsetTop - navbarHeight - 20;
-        window.scrollTo({
-            top: targetPosition,
-            behavior: 'smooth'
-        });
+
+        if (lenis) {
+            lenis.scrollTo(targetPosition, { offset: 0, duration: 1.1, easing: (t) => 1 - Math.pow(1 - t, 3) });
+        } else {
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
+        }
     }
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -830,7 +945,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const id = href.replace('#', '');
             if (document.getElementById(id)) {
                 e.preventDefault();
-                smoothScrollToSection(id);
+
+                const navigate = () => smoothScrollToSection(id);
+
+                if (!prefersReducedMotion) {
+                    playPageTransition(navigate);
+                } else {
+                    navigate();
+                }
             }
         });
     });
@@ -951,6 +1073,70 @@ document.addEventListener('DOMContentLoaded', function() {
                 closeProjectModal();
             }
         });
+    }
+
+    // Three.js starfield background for hero
+    if (window.THREE && !prefersReducedMotion) {
+        const heroCanvas = document.getElementById('hero-canvas');
+        if (heroCanvas) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
+
+            function resizeRenderer() {
+                const width = heroCanvas.clientWidth || window.innerWidth;
+                const height = heroCanvas.clientHeight || window.innerHeight;
+                renderer.setSize(width, height, false);
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            }
+
+            resizeRenderer();
+            window.addEventListener('resize', resizeRenderer);
+
+            camera.position.z = 60;
+
+            const starGeometry = new THREE.BufferGeometry();
+            const starCount = 800;
+            const positions = new Float32Array(starCount * 3);
+
+            for (let i = 0; i < starCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 200;
+                positions[i + 1] = (Math.random() - 0.5) * 120;
+                positions[i + 2] = -Math.random() * 200;
+            }
+
+            starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const starMaterial = new THREE.PointsMaterial({
+                color: 0x08f7fe,
+                size: 0.5,
+                transparent: true,
+                opacity: 0.85,
+                sizeAttenuation: true,
+            });
+
+            const stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+
+            let animationFrameId;
+            const animate = () => {
+                stars.rotation.y += 0.0009;
+                stars.rotation.x += 0.0004;
+                renderer.render(scene, camera);
+                animationFrameId = requestAnimationFrame(animate);
+            };
+            animate();
+
+            // Clean up on page unload
+            window.addEventListener('beforeunload', () => {
+                cancelAnimationFrame(animationFrameId);
+                starGeometry.dispose();
+                starMaterial.dispose();
+                renderer.dispose();
+            });
+        }
     }
 
     // Lazy load images

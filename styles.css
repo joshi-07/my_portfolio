@@ -189,6 +189,20 @@ body {
     opacity: 0.6;
 }
 
+/* Page / Section Transition Overlay */
+.page-transition-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 0%, rgba(8, 247, 254, 0.25) 0%, transparent 55%),
+                linear-gradient(135deg, rgba(5, 5, 5, 0.98), rgba(5, 5, 5, 0.98));
+    transform: scaleX(0);
+    transform-origin: left center;
+    z-index: 1200;
+    opacity: 0;
+    will-change: transform, opacity;
+}
+
 /* ===================================
    NAVIGATION WITH GLASSMORPHISM
    =================================== */
@@ -418,7 +432,7 @@ body.light-mode .navbar {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 0;
     pointer-events: none;
 }
 
