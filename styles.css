@@ -666,6 +666,18 @@ body.light-mode .navbar {
     color: var(--bg-dark);
     transform: translateY(-3px);
     box-shadow: 0 0 30px var(--shadow-neon-pink), 0 10px 30px rgba(254, 83, 187, 0.4);
+    text-shadow: 0 0 10px var(--neon-pink);
+}
+
+.btn:focus-visible,
+.nav-link:focus-visible,
+.social-icon:focus-visible,
+.project-card:focus-visible,
+.footer-social-link:focus-visible,
+.theme-btn:focus-visible {
+    outline: 2px solid var(--neon-blue);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 1px rgba(8, 247, 254, 0.5), 0 0 18px var(--shadow-neon-blue);
 }
 
 .hero-social {
@@ -3750,11 +3762,13 @@ body.light-mode .navbar {
     }
 
     .form-group input,
-    .form-group textarea {
+    .form-group textarea,
+    .form-group select {
         padding: 0.875rem;
         font-size: 1rem;
         min-height: 44px;
         -webkit-appearance: none;
+        appearance: none;
         border-radius: 8px;
     }
 
