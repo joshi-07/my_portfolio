@@ -1,5 +1,40 @@
+// Initialize 3D features
+let hero3D;
+
+// Check for WebGL support
+function hasWebGLSupport() {
+    try {
+        const canvas = document.createElement('canvas');
+        return !!(window.WebGLRenderingContext && 
+                 (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')));
+    } catch (e) {
+        return false;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     let hasScrolled = false;
+    
+    // Initialize 3D effects if WebGL is supported
+    if (hasWebGLSupport() && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        // Load and initialize Three.js scene
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+        script.onload = function() {
+            // Initialize 3D hero after Three.js is loaded
+            const heroScript = document.createElement('script');
+            heroScript.src = 'js/hero-3d.js';
+            document.body.appendChild(heroScript);
+            
+            // Initialize floating icons after a short delay
+            setTimeout(() => {
+                const iconsScript = document.createElement('script');
+                iconsScript.src = 'js/floating-icons.js';
+                document.body.appendChild(iconsScript);
+            }, 500);
+        };
+        document.body.appendChild(script);
+    }
 
     // Check for prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

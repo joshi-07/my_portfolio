@@ -3480,6 +3480,125 @@ body.light-mode .navbar {
 
     /* Hero Section */
     .hero-section {
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-3d-container {
+        z-index: -1;
+        opacity: 0;
+        animation: fadeIn 2s ease-out forwards;
+        pointer-events: none;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+/* Scanlines Effect */
+.scanlines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 247, 254, 0.02) 1px,
+    transparent 1px
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+  animation: scanline 8s linear infinite;
+}
+
+/* RGB Glitch Effect */
+.rgb-glitch {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(90deg, rgba(255,0,0,0.1) 0%, transparent 50%, rgba(0,0,255,0.1) 100%),
+    linear-gradient(0deg, rgba(0,255,0,0.1) 0%, transparent 50%, rgba(0,255,255,0.1) 100%);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  animation: glitchPulse 15s infinite alternate;
+}
+
+/* Floating Icons */
+.floating-icon-3d {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neon-blue);
+  font-size: 20px;
+  background: rgba(8, 247, 254, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(8, 247, 254, 0.3);
+  box-shadow: 0 0 15px rgba(8, 247, 254, 0.3);
+  transition: all 0.3s ease;
+  z-index: 10;
+  animation: float 6s ease-in-out infinite;
+}
+
+.floating-icon-3d:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 0 25px rgba(8, 247, 254, 0.6);
+  color: white;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Hero Content */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 120px 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes glitchPulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.2; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Hero Content */
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+    .hero-section {
         padding: 5rem 1rem 3rem;
         min-height: 100vh;
         min-height: 100dvh; /* Dynamic viewport height for mobile */

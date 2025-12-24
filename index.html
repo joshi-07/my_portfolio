@@ -13,6 +13,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/hero-3d.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- TailwindCSS CDN for utility-first layout and responsive enhancements -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -112,22 +113,19 @@
         <div class="parallax-element"></div>
     </div>
 
+    <!-- 3D Background Elements -->
+    <div class="hero-3d-container">
+        <canvas id="hero-canvas"></canvas>
+    </div>
+    <div class="scanlines"></div>
+    <div class="rgb-glitch"></div>
+
     <!-- Hero Section -->
     <section id="home" class="hero-section">
-        <div class="hero-3d-container">
-            <canvas id="hero-canvas"></canvas>
-        </div>
-        <div class="hero-background">
-            <div class="hero-shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
-            </div>
-        </div>
         <div class="hero-content">
             <div class="hero-text">
                 <span class="hero-greeting">Hello, I'm</span>
-                <h1 class="hero-title">Sughosha K Joshi</h1>
+                <h1 class="hero-title" id="hero-title">Sughosha K Joshi</h1>
                 <p class="hero-subtitle">Software Engineering Student & Developer</p>
                 <p class="hero-description">Passionate about building innovative solutions through code. Specializing in full-stack development, algorithms, and creating impactful software.</p>
                 <div class="hero-buttons">
@@ -152,33 +150,11 @@
                     </a>
                 </div>
             </div>
-            <div class="hero-animations">
-                <div class="floating-icon icon-1">
-                    <i class="fab fa-html5"></i>
-                </div>
-                <div class="floating-icon icon-2">
-                    <i class="fab fa-css3-alt"></i>
-                </div>
-                <div class="floating-icon icon-3">
-                    <i class="fab fa-js-square"></i>
-                </div>
-                <div class="floating-icon icon-4">
-                    <i class="fab fa-python"></i>
-                </div>
-                <div class="floating-icon icon-5">
-                    <i class="fab fa-react"></i>
-                </div>
-                <div class="floating-icon icon-6">
-                    <i class="fab fa-node-js"></i>
-                </div>
-                <div class="floating-icon icon-7">
-                    <i class="fab fa-git-alt"></i>
-                </div>
-                <div class="floating-icon icon-8">
-                    <i class="fas fa-code"></i>
-                </div>
-            </div>
         </div>
+        
+        <!-- 3D Floating Icons -->
+        <div id="floating-icons-3d"></div>
+        
         <div class="scroll-indicator">
             <span>Scroll Down</span>
             <i class="fas fa-chevron-down"></i>
@@ -775,6 +751,7 @@
     <div class="noise-overlay"></div>
 
     <script src="my_portfolio/js/hero-3d.js"></script>
+    <script src="js/floating-icons.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
