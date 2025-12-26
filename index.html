@@ -26,6 +26,7 @@
     <!-- GSAP Core + ScrollTrigger for cinematic animations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <!-- Lenis for smooth, inertia-based scrolling -->
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.32/bundled/lenis.min.js"></script>
     <!-- Google Analytics -->
@@ -379,28 +380,26 @@
                     <div class="project-image">
                         <img data-src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=320&h=200&q=80" alt="Medical Carecycle Application" class="project-screenshot" loading="lazy">
                         <div class="project-overlay">
-                            <a href="https://carecycle-frontend.onrender.com/" target="_blank" class="project-link">
+                            <div class="tech-stack">
+                                <div class="tech-icon" data-tooltip="React"><i class="fab fa-react"></i></div>
+                                <div class="tech-icon" data-tooltip="Node.js"><i class="fab fa-node-js"></i></div>
+                                <div class="tech-icon" data-tooltip="MongoDB"><i class="fas fa-database"></i></div>
+                                <div class="tech-icon" data-tooltip="AWS"><i class="fab fa-aws"></i></div>
+                            </div>
+                            <a href="#" class="project-link">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
                         </div>
                     </div>
                     <div class="project-content">
-                        <div class="project-header">
-                            <h3 class="project-title">Carecycle</h3>
-                            <div class="project-meta">
-                                <span class="meta-item"><i class="fas fa-globe"></i> Live</span>
-                            </div>
-                        </div>
-                        <p class="project-description">A full-stack application for managing and tracking the lifecycle of products. Features include product tracking, maintenance scheduling, and analytics. Built with modern web technologies for a seamless user experience.</p>
+                        <h3 class="project-title">CareCycle - Medical App</h3>
+                        <p class="project-description">A healthcare management application for tracking patient care and medical records with real-time updates and secure data handling.</p>
                         <div class="project-tech">
                             <span class="tech-tag">React</span>
                             <span class="tech-tag">Node.js</span>
                             <span class="tech-tag">MongoDB</span>
-                            <span class="tech-tag">Express</span>
                         </div>
-                        <a href="https://carecycle-frontend.onrender.com/" target="_blank" class="project-btn">
-                            View Project <i class="fas fa-arrow-right"></i>
-                        </a>
+                        <a href="#" class="project-btn">View Project <i class="fas fa-arrow-right"></i></a>
                     </div>
                 </div>
 
@@ -440,29 +439,26 @@
                     <div class="project-image">
                         <img data-src="https://images.unsplash.com/photo-1556438064-2d7646166914?ixlib=rb-4.0.3&auto=format&fit=crop&w=320&h=200&q=80" alt="Mini Arcade Game Screenshot" class="project-screenshot" loading="lazy">
                         <div class="project-overlay">
+                            <div class="tech-stack">
+                                <div class="tech-icon" data-tooltip="JavaScript"><i class="fab fa-js"></i></div>
+                                <div class="tech-icon" data-tooltip="HTML5"><i class="fab fa-html5"></i></div>
+                                <div class="tech-icon" data-tooltip="CSS3"><i class="fab fa-css3-alt"></i></div>
+                                <div class="tech-icon" data-tooltip="Canvas API"><i class="fas fa-paint-brush"></i></div>
+                            </div>
                             <a href="https://joshi-07.github.io/mini_arcade_game/" target="_blank" class="project-link">
                                 <i class="fas fa-external-link-alt"></i>
                             </a>
                         </div>
                     </div>
                     <div class="project-content">
-                        <div class="project-header">
-                            <h3 class="project-title">Mini Arcade Game</h3>
-                            <div class="project-meta">
-                                <span class="meta-item"><i class="fas fa-globe"></i> Live</span>
-                                <span class="meta-item"><i class="fas fa-star"></i> 1</span>
-                                <span class="meta-item"><i class="fas fa-code-branch"></i> 1</span>
-                            </div>
-                        </div>
-                        <p class="project-description">An interactive mini arcade game featuring engaging gameplay and responsive controls. Showcases game development skills and user interaction design.</p>
+                        <h3 class="project-title">Mini Arcade Games</h3>
+                        <p class="project-description">A collection of classic arcade games built with JavaScript and HTML5 Canvas, featuring smooth animations and responsive controls.</p>
                         <div class="project-tech">
                             <span class="tech-tag">JavaScript</span>
                             <span class="tech-tag">HTML5</span>
                             <span class="tech-tag">CSS3</span>
                         </div>
-                        <a href="https://github.com/joshi-07/mini_arcade_game" target="_blank" class="project-btn">
-                            View Project <i class="fas fa-arrow-right"></i>
-                        </a>
+                        <a href="https://joshi-07.github.io/mini_arcade_game/" target="_blank" class="project-btn">Play Now <i class="fas fa-gamepad"></i></a>
                     </div>
                 </div>
 
@@ -752,6 +748,7 @@
 
     <script src="my_portfolio/js/hero-3d.js"></script>
     <script src="js/floating-icons.js"></script>
+    <script src="js/project-animations.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

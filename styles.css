@@ -174,6 +174,53 @@ body {
     90% { transform: translate(-10%, 10%); }
 }
 
+/* Cursor Glow Effect */
+.cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(8, 247, 254, 0.1) 0%, rgba(8, 247, 254, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    will-change: transform;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .project-btn,
+    .tech-icon,
+    .project-overlay {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .cursor-glow {
+        display: none !important;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .project-card {
+        transform: translateY(20px);
+    }
+
+    .project-overlay {
+        padding: 1rem;
+    }
+
+    .tech-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+}
+
 /* Cursor Trail */
 .cursor-trail {
     position: fixed;
@@ -1457,14 +1504,21 @@ body.light-mode .navbar {
     border: 1px solid var(--glass-border);
     border-radius: 15px;
     overflow: hidden;
-    transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
     backdrop-filter: blur(10px);
     box-shadow: var(--glass-shadow);
     transform-style: preserve-3d;
     perspective: 1000px;
-    will-change: transform;
+    will-change: transform, opacity;
     position: relative;
+    transform: translateY(30px);
+    opacity: 0;
+}
+
+.project-card.visible {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .project-card::before {
@@ -1499,31 +1553,6 @@ body.light-mode .navbar {
     50% { opacity: 1; }
 }
 
-.project-card.card-visible {
-    opacity: 1 !important;
-    transform: translateY(0) translateX(0) scale(1) !important;
-}
-
-/* Enhanced hover glow effect */
-.project-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(100, 255, 218, 0.1));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    border-radius: 15px;
-    z-index: 0;
-}
-
-.project-card:hover::before {
-    opacity: 1;
-}
-
 .project-card > * {
     position: relative;
     z-index: 1;
@@ -1556,16 +1585,81 @@ body.light-mode .navbar {
 
 .project-overlay {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(10, 25, 47, 0.9);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 1.5rem;
     opacity: 0;
-    transition: var(--transition);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-card:hover .project-overlay {
+    opacity: 1;
+    backdrop-filter: blur(4px);
+}
+
+/* Tech Stack Icons */
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+
+.tech-icon {
+    width: 36px;
+    height: 36px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--neon-blue);
+    transition: all 0.3s ease;
+    transform: scale(0.8);
+    opacity: 0;
+    position: relative;
+}
+
+.tech-icon::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+}
+
+.tech-icon:hover::after {
+    opacity: 1;
+}
+
+.project-card:hover .tech-stack {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.project-card:hover .tech-icon {
+    transform: scale(1);
     opacity: 1;
 }
 
@@ -1675,6 +1769,7 @@ body.light-mode .navbar {
     transition-delay: 0.25s;
 }
 
+/* Project Button with Magnetic Effect */
 .project-btn {
     color: var(--accent-color);
     text-decoration: none;
@@ -1682,9 +1777,99 @@ body.light-mode .navbar {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    transition: all 0.3s ease;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
+    overflow: hidden;
+    z-index: 1;
     transform: translateZ(0);
+    will-change: transform;
+    background: linear-gradient(45deg, var(--neon-blue), var(--neon-pink));
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.project-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-btn:hover {
+    transform: translate3d(0, -2px, 0) scale(1.02);
+    box-shadow: 0 10px 20px rgba(8, 247, 254, 0.2);
+}
+
+.project-btn:hover::before {
+    opacity: 0.2;
+}
+
+.project-btn i {
+    transition: transform 0.3s ease;
+}
+
+.project-btn:hover i {
+    transform: translateX(4px);
+}
+
+/* Cursor Glow Effect */
+.cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(8, 247, 254, 0.1) 0%, rgba(8, 247, 254, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    will-change: transform;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .project-btn,
+    .tech-icon,
+    .project-overlay {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .cursor-glow {
+        display: none !important;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .project-card {
+        transform: translateY(20px);
+    }
+
+    .project-overlay {
+        padding: 1rem;
+    }
+
+    .tech-icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
 }
 
 .project-btn::after {
@@ -3799,11 +3984,33 @@ body.light-mode .navbar {
     }
 
     .project-card {
-        max-width: 100%;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        z-index: 1;
+        backdrop-filter: blur(10px);
+        box-shadow: var(--glass-shadow);
+        transform: translateY(30px);
+        opacity: 0;
+        will-change: transform, opacity;
+    }
+
+    .project-card.visible {
+        transform: translateY(0);
+        opacity: 1;
     }
 
     .project-image {
-        height: 180px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .project-image img {
+        transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: transform;
     }
 
     .project-content {
